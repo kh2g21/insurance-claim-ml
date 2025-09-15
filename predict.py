@@ -4,6 +4,9 @@ import joblib
 # Load trained model and training columns
 model, train_cols = joblib.load("best_insurance_claim_model.pkl")
 
+print(type(model))
+
+
 # Collect user input
 agency = input("Enter Agency (e.g., CBH, CWT): ")
 agency_type = input("Enter Agency Type (e.g., Travel Agency, Online): ")
