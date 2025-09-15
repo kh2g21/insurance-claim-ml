@@ -155,5 +155,7 @@ print(results_df)
 # Save best model for deployment
 # -------------------
 print(f"\nBest model: {best_name} with Test ROC-AUC={best_score:.4f}")
-joblib.dump(best_model, "best_insurance_claim_model.pkl")
+joblib.dump((best_model, X_train.columns), "best_insurance_claim_model.pkl")
 print("Model saved as best_insurance_claim_model.pkl")
+
+
