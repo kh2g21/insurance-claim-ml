@@ -84,7 +84,7 @@ Cross-validation is a crucial step in evaluating model performance, and there ar
 ```
 git clone https://github.com/kh2g21/insurance-claim-ml.git
 cd insurance-claim-ml
-``
+```
 
 2. Install dependencies (using `requirements.txt`)
 
