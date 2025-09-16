@@ -2,6 +2,20 @@
 
 This is a model that predicts whether a customer will make a travel insurance claim using machine learning. It includes an extensive ML pipeline; from preprocessing, handling data imbalances, model training, hyperparameter tuning, and evaluation. Finally, the model is deployed to a Streamlit app according to the machine learning algorithm that yields the best ROC-AUC results after evaluation. 
 
+## Project Structure
+
+**travel-insurance-model.py**
+
+The main training script. It loads the travel insurance dataset, applies preprocessing (including one-hot encoding of categorical variables and handling class imbalance with SMOTE), and splits the data into training and test sets. It then defines multiple machine learning models (Logistic Regression, Random Forest, Gradient Boosting, and XGBoost) and performs hyperparameter tuning using GridSearchCV with cross-validation. The script evaluates each model using metrics such as ROC-AUC, PR-AUC, and confusion matrices, then saves the best-performing model along with the training feature names for deployment.
+
+**best_insurance_claim_model.pkl**
+
+This is the serialized file containing the best-performing model along with the list of training feature names. It was saved using joblib to ensure the model can be reloaded and used consistently for predictions without retraining.
+
+**travel insurance.csv**
+
+This is the dataset used for model training. It contains information on travel insurance sales, including customer demographics, product details, sales information, and whether a claim was made. The dataset serves as the foundation for building and evaluating the machine learning models.
+
 ## Dataset and Preprocessing
 
 The dataset used for this project is the [Travel Insurance](https://www.kaggle.com/datasets/mhdzahier/travel-insurance) dataset which can be found on Kaggle. In this repository, it is represented by `travel insurance.csv`. The target variable is `Claim`, which indicates whether a customer has made a travel insurance claim. In the preprocessing step, the target values were mapped to numerical form: "Yes" was converted to 1, and "No" was converted to 0. The dataset contains both numerical features, such as age and travel duration, and categorical features, such as gender and destination. As this dataset also included some categorical features, these had to be converted into dummy variables using one-hot encoding, and the first category was dropped to avoid multicollinearity. 
@@ -14,7 +28,11 @@ To address the issue of class imbalance, several approaches were tested. Initial
 
 Four different machine learning models were trained in this project: Logistic Regression, Random Forest, Gradient Boosting, and XGBoost. Each model was combined with SMOTE (and scaling in the case of Logistic Regression) in a pipeline to ensure proper preprocessing within cross-validation. Hyperparameter tuning was performed for each model using `GridSearchCV` with five-fold stratified cross-validation, optimizing for the area under the ROC curve (ROC-AUC).
 
-For Logistic Regression, the solver "saga" was used with both L1 and L2 penalties, and the regularization strength C was tested with values 0.01, 0.1, and 1. For Random Forest, the number of estimators was tested with 100 and 150 trees, maximum tree depths of 5 and 8 were evaluated, and the minimum number of samples required to split an internal node was set to either 2 or 5. For Gradient Boosting, the number of estimators was tested with 100 and 150, maximum tree depths of 3 and 5 were evaluated, the learning rate was tested with 0.05 and 0.1, and the subsample ratio was tested with 0.8 and 1.0. For XGBoost, the number of estimators was set to 100 and 150, maximum tree depths of 3 and 5 were evaluated, the learning rate was tested with 0.05 and 0.1, and both the subsample ratio and the column sample by tree ratio were set to 0.8.
+For Logistic Regression, the `saga` solver was chosen because it supports both L1 (Lasso) and L2 (Ridge) penalties, as well as elastic net. Since the hyperparameter search included both L1 and L2 penalties, a solver was needed that could handle both. The `saga` solver is also scalable and works well with large datasets, which makes it the ideal choice for models where both penalty types are tested during GridSearchCV.
+
+For Gradient Boosting, the number of estimators (100 and 150) represented the number of boosting stages, while tree depths of 3 and 5 kept the individual learners weak, which is key for boosting to generalize well. The learning rate values (0.05 and 0.1) allowed the model to update predictions more cautiously, reducing the risk of overfitting. Subsampling ratios (0.8 and 1.0) were included to test whether introducing randomness in row sampling improved generalization.
+
+For XGBoost, the hyperparameters were chosen with a similar logic to Gradient Boosting, but with added control. The learning rate (0.05, 0.1), estimators (100, 150), and max depths (3, 5) controlled the trade-off between bias and variance. Subsample and column sampling by tree ratios (both set to 0.8) introduced randomness at both the row and feature level, which helps reduce overfitting while improving robustness.
 
 After training and cross-validation, the best model was selected based on the ROC-AUC score on the test set. The evaluation metrics included the classification report (precision, recall, and F1-score), the ROC-AUC score, the Precision-Recall AUC (PR-AUC), and the confusion matrix. These metrics allow us to evaluate both overall model performance and performance on the minority class, which is critical given the imbalanced nature of the dataset.
 
