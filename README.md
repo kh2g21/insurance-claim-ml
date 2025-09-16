@@ -4,6 +4,10 @@ This is a model that predicts whether a customer will make a travel insurance cl
 
 ## Project Structure
 
+**requirements.txt**
+
+Lists dependencies (Streamlit, scikit-learn, imbalanced-learn, pandas, etc.) needed to run the app and model.
+
 **travel-insurance-model.py**
 
 The main training script. It loads the travel insurance dataset, applies preprocessing (including one-hot encoding of categorical variables and handling class imbalance with SMOTE), and splits the data into training and test sets. It then defines multiple machine learning models (Logistic Regression, Random Forest, Gradient Boosting, and XGBoost) and performs hyperparameter tuning using GridSearchCV with cross-validation. The script evaluates each model using metrics such as ROC-AUC, PR-AUC, and confusion matrices, then saves the best-performing model along with the training feature names for deployment.
