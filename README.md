@@ -16,6 +16,10 @@ This is the serialized file containing the best-performing model along with the 
 
 This is the dataset used for model training. It contains information on travel insurance sales, including customer demographics, product details, sales information, and whether a claim was made. The dataset serves as the foundation for building and evaluating the machine learning models.
 
+**app.py**
+
+This acts as the entry point for deployment. It loads the saved model `(best_insurance_claim_model.pkl)` and provides a user interface (built with Streamlit) where users can input details like agency, duration, destination, age, etc and displays the results (e.g., predicted claim = Yes/No, with probability). 
+
 ## Dataset and Preprocessing
 
 The dataset used for this project is the [Travel Insurance](https://www.kaggle.com/datasets/mhdzahier/travel-insurance) dataset which can be found on Kaggle. In this repository, it is represented by `travel insurance.csv`. The target variable is `Claim`, which indicates whether a customer has made a travel insurance claim. In the preprocessing step, the target values were mapped to numerical form: "Yes" was converted to 1, and "No" was converted to 0. The dataset contains both numerical features, such as age and travel duration, and categorical features, such as gender and destination. As this dataset also included some categorical features, these had to be converted into dummy variables using one-hot encoding, and the first category was dropped to avoid multicollinearity. 
