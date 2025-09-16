@@ -77,5 +77,25 @@ Model improvements are another important area to consider. While the current pro
 
 Cross-validation is a crucial step in evaluating model performance, and there are several ways it could be enhanced in this project. Currently, a five-fold stratified cross-validation is used, which ensures that each fold has a similar distribution of the target classes. This approach could be extended by using repeated stratified K-fold cross-validation, which repeats the splitting process multiple times to provide more stable and reliable estimates of model performance. This is particularly important in imbalanced datasets like this one, where variance between folds can affect the evaluation metrics. Moreover, exploring multiple evaluation metrics during cross-validation, such as Precision-Recall AUC or F1-score for the minority class, would provide a better understanding of the model’s performance beyond ROC-AUC.
 
+## How to Run
+
+1. Clone the repo
+
+```
+git clone https://github.com/kh2g21/insurance-claim-ml.git
+cd insurance-claim-ml
+``
+
+2. Install dependencies (using `requirements.txt`)
+
+```
+pip install -r requirements.txt
+```
+
+3. Run the Streamlit app (for interactive predictions)
+
+```
+streamlit run app.py
+```
 
 
